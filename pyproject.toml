@@ -1,0 +1,45 @@
+[project]
+name = "qt-extensions"
+version = "1.2.1"
+description = "Various QtWidgets extending the functionality of PySide2"
+authors = [
+    {name = "Beat Reichenbach"}
+]
+dependencies = [
+    "qt-material-icons>=0.2,<1"
+]
+requires-python = ">=3.9"
+license = {text = "MIT"}
+readme = "README.md"
+
+[project.optional-dependencies]
+dev = [
+    "black>=24.0",
+    "python-semantic-release>=9.0"
+]
+pyside2 = ["PySide2"]
+pyside6 = ["PySide6"]
+graphical = ["numpy"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["qt_extensions*"]
+
+[tool.semantic_release]
+version_variables = [
+    "qt_extensions/__init__.py:__version__"
+]
+version_toml  = ["pyproject.toml:project.version"]
+
+[tool.semantic_release.publish]
+upload_to_vcs_release = true
+
+[tool.semantic_release.remote]
+ignore_token_for_push = true
+type = "github"
+
+[tool.black]
+skip-string-normalization = true
