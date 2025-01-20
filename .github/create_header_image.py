@@ -85,7 +85,7 @@ def create_header_image(
     drop_shadow = QtWidgets.QGraphicsDropShadowEffect()
     drop_shadow.setOffset(shadow_offset)
     drop_shadow.setBlurRadius(shadow_radius)
-    drop_shadow.setColor(QtGui.QColorConstants.Black)
+    drop_shadow.setColor(QtGui.QColor(0, 0, 0, 128))
 
     # Masked Images
     for i, path in enumerate(paths):
