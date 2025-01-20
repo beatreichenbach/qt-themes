@@ -1,0 +1,48 @@
+{
+  "primary":    "#62bac6",
+  "secondary":  "#eac786",
+
+  "magenta":    "#c88bda",
+  "red":        "#e27881",
+  "orange":     "#e79c7e",
+  "yellow":     "#eac786",
+  "green":      "#98c379",
+  "cyan":       "#62bac6",
+  "blue":       "#71b9f4",
+
+  "text":       "#e6e6e6",
+  "subtext1":   "#c9ccd3",
+  "subtext0":   "#abb2bf",
+  "overlay2":   "#969dab",
+  "overlay1":   "#818896",
+  "overlay0":   "#6c7280",
+  "surface2":   "#5b626d",
+  "surface1":   "#4a505a",
+  "surface0":   "#393e47",
+  "base":       "#282c34",
+  "mantle":     "#21252b",
+  "crust":      "#1d1f23"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
