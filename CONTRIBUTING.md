@@ -19,7 +19,7 @@ Or on Windows:
 
 ### Install the Development Dependencies.
 
-Install `qt-theme` in editable mode:
+Install `qt-themes` in editable mode:
 ```shell
 python -m pip install -e .[dev]
 ```
