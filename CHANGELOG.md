@@ -1,6 +1,22 @@
 # CHANGELOG
 
 
+## v0.2.0 (2025-01-20)
+
+### Features
+
+- Add dracula theme
+  ([`bc034e6`](https://github.com/beatreichenbach/qt-themes/commit/bc034e633e70f5c8c102bf7a65a9c7d65dea5a33))
+
+- Store current theme
+  ([`2bdafd1`](https://github.com/beatreichenbach/qt-themes/commit/2bdafd1549f908eb0096ab6a35438380f6fff40f))
+
+### Testing
+
+- Add individual screenshot
+  ([`bca348d`](https://github.com/beatreichenbach/qt-themes/commit/bca348d6d81d9d4c001818fe848ff58fe1fa346a))
+
+
 ## v0.1.0 (2025-01-20)
 
 ### Build System
