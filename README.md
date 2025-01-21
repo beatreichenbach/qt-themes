@@ -100,6 +100,16 @@ These are some of the themes that are included in the package.
 
 </details>
 
+<details>
+<summary>Dracula</summary>
+
+<https://draculatheme.com/>
+
+![Dracula](https://raw.githubusercontent.com/beatreichenbach/qt-themes/refs/heads/main/.github/assets/dracula.png)
+
+</details>
+
+
 ## Contributing
 
 To contribute please refer to the [Contributing Guide](CONTRIBUTING.md).
