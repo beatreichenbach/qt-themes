@@ -18,6 +18,7 @@ ColorGroup = QtGui.QPalette.ColorGroup
 ColorRole = QtGui.QPalette.ColorRole
 
 THEMES = 'QT_THEMES'
+PROPERTY_NAME = 'theme'
 
 logger = logging.getLogger(__package__)
 
@@ -52,8 +53,16 @@ class Theme:
         return self.text.value() > self.base.value()
 
 
-def get_theme(name: str) -> Theme | None:
-    """Return the theme with `name` if found and valid."""
+def get_theme(name: str | None = None) -> Theme | None:
+    """
+    Return the theme with `name` if found and valid.
+
+    If no name is provided, return the current theme applied to the QApplication. This
+    only works in the same Python session.
+    """
+
+    if name is None:
+        return QtWidgets.QApplication.instance().property(PROPERTY_NAME)
 
     file_name = f'{name}.json'
     themes_paths = _get_paths()
@@ -188,6 +197,7 @@ def set_theme(theme: Theme | str | None, style: str | None = 'fusion') -> None:
     palette = QtGui.QPalette()
     update_palette(palette, theme)
     QtWidgets.QApplication.setPalette(palette)
+    QtWidgets.QApplication.instance().setProperty(PROPERTY_NAME, theme)
 
 
 def _load(path: str) -> Theme:
