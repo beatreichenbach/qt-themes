@@ -10,6 +10,7 @@ class WidgetControls(QtWidgets.QWidget):
     theme_changed: QtCore.Signal = QtCore.Signal(str)
     disabled: QtCore.Signal = QtCore.Signal(bool)
     screenshot_requested: QtCore.Signal = QtCore.Signal()
+    screenshot_all_requested: QtCore.Signal = QtCore.Signal()
 
     def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(parent)
@@ -53,6 +54,10 @@ class WidgetControls(QtWidgets.QWidget):
         screenshot_button.clicked.connect(self.screenshot_requested)
         layout.addWidget(screenshot_button)
 
+        screenshot_button = QtWidgets.QPushButton('Screenshot All')
+        screenshot_button.clicked.connect(self.screenshot_all_requested)
+        layout.addWidget(screenshot_button)
+
     def set_theme(self, theme: str) -> None:
         self.theme_combo.setCurrentText(theme)
 
@@ -73,6 +78,7 @@ class WidgetGallery(QtWidgets.QWidget):
         self.controls.theme_changed.connect(self._set_theme)
         self.controls.disabled.connect(self._set_disabled)
         self.controls.screenshot_requested.connect(self._screenshot)
+        self.controls.screenshot_all_requested.connect(self._screenshot_all)
         layout.addWidget(self.controls)
 
         # Widgets
@@ -291,6 +297,12 @@ class WidgetGallery(QtWidgets.QWidget):
         view_layout.addWidget(table_widget)
 
     def _screenshot(self) -> None:
+        theme = self.controls.theme_combo.currentText()
+        path = os.path.join('..', '.github', 'assets', f'{theme}.png')
+        pixmap = self.grab()
+        pixmap.save(path)
+
+    def _screenshot_all(self) -> None:
         combo = self.controls.theme_combo
         combo.blockSignals(True)
         for i in range(combo.count()):
