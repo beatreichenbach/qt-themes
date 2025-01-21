@@ -12,4 +12,4 @@ def application() -> QtWidgets.QApplication:
 
     app = QtWidgets.QApplication(sys.argv)
     yield app
-    app.exec_()
+    app.exec()
