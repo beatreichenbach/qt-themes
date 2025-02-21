@@ -62,7 +62,10 @@ def get_theme(name: str | None = None) -> Theme | None:
     """
 
     if name is None:
-        return QtWidgets.QApplication.instance().property(PROPERTY_NAME)
+        if application := QtWidgets.QApplication.instance():
+            return application.property(PROPERTY_NAME)
+        else:
+            return
 
     file_name = f'{name}.json'
     themes_paths = _get_paths()
@@ -197,7 +200,8 @@ def set_theme(theme: Theme | str | None, style: str | None = 'fusion') -> None:
     palette = QtGui.QPalette()
     update_palette(palette, theme)
     QtWidgets.QApplication.setPalette(palette)
-    QtWidgets.QApplication.instance().setProperty(PROPERTY_NAME, theme)
+    if application := QtWidgets.QApplication.instance():
+        application.setProperty(PROPERTY_NAME, theme)
 
 
 def _load(path: str) -> Theme:
