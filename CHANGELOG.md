@@ -1,6 +1,24 @@
 # CHANGELOG
 
 
+## v0.3.0 (2025-03-06)
+
+### Bug Fixes
+
+- Check app is running
+  ([`8a9b0e8`](https://github.com/beatreichenbach/qt-themes/commit/8a9b0e8f3901145051f9cb29b08a7e934d0d7888))
+
+### Features
+
+- Add blender
+  ([`55a95ef`](https://github.com/beatreichenbach/qt-themes/commit/55a95efbfaba81bb830053c2e211c310131b491d))
+
+### Testing
+
+- Use PySide6 syntax
+  ([`1015f96`](https://github.com/beatreichenbach/qt-themes/commit/1015f96b770d0d4cc2a727343b857c2af5c42ffe))
+
+
 ## v0.2.0 (2025-01-20)
 
 ### Features
