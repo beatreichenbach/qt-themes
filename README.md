@@ -109,6 +109,15 @@ These are some of the themes that are included in the package.
 
 </details>
 
+<details>
+<summary>Blender</summary>
+
+<https://blender.org>
+
+![Blender](https://raw.githubusercontent.com/beatreichenbach/qt-themes/refs/heads/main/.github/assets/blender.png)
+
+</details>
+
 
 ## Contributing
 
