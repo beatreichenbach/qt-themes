@@ -207,6 +207,35 @@ def set_theme(theme: Theme | str | None, style: str | None = 'fusion') -> None:
         application.setProperty(PROPERTY_NAME, theme)
 
 
+def set_widget_theme(widget: QtWidgets.QWidget,
+                     theme: Theme | str | None,
+                     style: str | None = 'fusion') -> None:
+    """
+    Sets the theme and style for the given QWidget.
+    By default, set the Fusion style as it works the best with QPalette ColorRoles.
+    """
+
+    # Set style
+    if style:
+        widget.setStyle(QtWidgets.QStyleFactory.create(style))
+
+    # Reset theme
+    if not theme:
+        widget.setPalette(QtGui.QPalette())
+        return
+
+    # Set theme
+    if isinstance(theme, str):
+        theme = get_theme(theme)
+        if not theme:
+            return
+
+    palette = QtGui.QPalette()
+    update_palette(palette, theme)
+    widget.setPalette(palette)
+    widget.setProperty(PROPERTY_NAME, theme)
+
+
 def _load(path: str) -> Theme:
     """
     Return the theme from `path`.
