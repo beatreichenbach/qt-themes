@@ -5,9 +5,7 @@ description = "A collection of themes for Qt applications in Python."
 authors = [
     {name = "Beat Reichenbach"}
 ]
-dependencies = [
-    'qtpy',
-]
+dependencies = []
 requires-python = ">=3.9"
 license = "MIT"
 readme = "README.md"
