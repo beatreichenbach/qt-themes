@@ -65,7 +65,7 @@ def get_theme(name: str | None = None) -> Theme | None:
         if application := QtWidgets.QApplication.instance():
             return application.property(PROPERTY_NAME)
         else:
-            return
+            return None
 
     file_name = f'{name}.json'
     themes_paths = _get_paths()
@@ -75,13 +75,13 @@ def get_theme(name: str | None = None) -> Theme | None:
             break
     else:
         logger.warning(f'Cannot find theme {file_name!r}.')
-        return
+        return None
 
     try:
         return _load(path)
     except (JSONDecodeError, TypeError):
         logger.warning(f'Invalid theme {path!r}.')
-        return
+        return None
 
 
 def get_themes() -> dict[str, Theme]:
