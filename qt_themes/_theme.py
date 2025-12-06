@@ -8,9 +8,12 @@ import os
 from json import JSONDecodeError
 
 try:
-    from PySide6 import QtGui, QtWidgets
+    from qtpy import QtCore, QtGui, QtWidgets
 except ImportError:
-    from PySide2 import QtGui, QtWidgets
+    try:
+        from PySide6 import QtGui, QtWidgets
+    except ImportError:
+        from PySide2 import QtGui, QtWidgets
 
 import qt_themes
 

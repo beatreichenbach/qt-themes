@@ -18,6 +18,7 @@ dev = [
 ]
 pyside2 = ["PySide2"]
 pyside6 = ["PySide6"]
+qtpy = ["qtpy>=2.0,<3"]
 
 [build-system]
 requires = ["setuptools"]
