@@ -8,12 +8,12 @@ import os
 from json import JSONDecodeError
 
 try:
-    from qtpy import QtCore, QtGui, QtWidgets
+    from qtpy import QtGui, QtWidgets  # ty: ignore[unresolved-import]
 except ImportError:
     try:
         from PySide6 import QtGui, QtWidgets
     except ImportError:
-        from PySide2 import QtGui, QtWidgets
+        from PySide2 import QtGui, QtWidgets  # ty: ignore[unresolved-import]
 
 import qt_themes
 
@@ -119,7 +119,7 @@ def update_palette(palette: QtGui.QPalette, theme: Theme) -> None:
     else:
         highlighted_text_color = theme.text
 
-    h, s, v, a = theme.text.getHsvF()
+    h, s, v, a = theme.text.getHsvF()  # ty: ignore[not-iterable]
     bright_text_color = QtGui.QColor.fromHsvF(h, s, 1 - v, a)
 
     # Normal

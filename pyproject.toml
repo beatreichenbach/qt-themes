@@ -12,8 +12,11 @@ readme = "README.md"
 
 [project.optional-dependencies]
 dev = [
-    "black>=24.0",
+    "pre-commit>=4.0",
     "python-semantic-release>=9.0",
+    "pytest>=8.0",
+    "ruff>=0.16",
+    "ty>=0.0.82",
     "PySide6"
 ]
 pyside2 = ["PySide2"]
@@ -34,11 +37,19 @@ include = ["qt_themes"]
 "qt_themes" = ["themes/*.json"]
 
 [tool.semantic_release]
+allow_zero_version = true
 version_variables = ["qt_themes/__init__.py:__version__"]
 version_toml  = ["pyproject.toml:project.version"]
 
 [tool.semantic_release.remote]
 ignore_token_for_push = true
 
-[tool.black]
-skip-string-normalization = true
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "B", "SIM", "ANN", "RUF"]
+
+[tool.pytest.ini_options]
+log_cli = true
+log_level = "INFO"

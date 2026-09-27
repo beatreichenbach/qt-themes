@@ -1,34 +1,29 @@
 # Contributing Guide
 
+## Development
 
-### Create a virtual environment
+To get started:
 
-Create a venv:
-```shell
-python -m venv venv
+```sh
+uv venv --python 3.13
+uv pip install -e ".[dev]"
+pre-commit install
 ```
 
-Activate it on Linux and macOS:
-```shell
-source venv/bin/activate
-```
-Or on Windows:
-```shell
-.\venv\Scripts\activate.bat
-```
+Run the checks:
 
-### Install the Development Dependencies.
-
-Install `qt-themes` in editable mode:
-```shell
-python -m pip install -e .[dev]
+```sh
+ruff format qt_themes examples tests
+ruff check --select I --fix qt_themes examples tests
+ruff check qt_themes examples tests
+ty check
+pytest
 ```
 
 ### Releasing Changes
 
-To version up using [python-semantic-release]:
-```shell
+To version up using [python-semantic-release](https://github.com/python-semantic-release/python-semantic-release):
+
+```sh
 semantic-release version
 ```
-
-[python-semantic-release]: https://github.com/python-semantic-release/python-semantic-release

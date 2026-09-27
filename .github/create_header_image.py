@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os.path
 from collections.abc import Sequence
 
@@ -12,7 +14,7 @@ class MaskedPixmapItem(QtWidgets.QGraphicsPixmapItem):
     ) -> None:
         super().__init__(parent)
         self.setPixmap(pixmap)
-        self.pixmap = pixmap
+        self._pixmap = pixmap
 
         self._offset = 0
         self._shear = 100
@@ -26,10 +28,10 @@ class MaskedPixmapItem(QtWidgets.QGraphicsPixmapItem):
     ) -> None:
         painter.setRenderHint(QtGui.QPainter.RenderHint.Antialiasing)
         painter.setClipPath(self._shear_path())
-        super().paint(painter, option, widget)
+        super().paint(painter, option, widget)  # ty: ignore[invalid-argument-type]
 
     def _shear_path(self) -> QtGui.QPainterPath:
-        rect = self.pixmap.rect()
+        rect = self._pixmap.rect()
         path = QtGui.QPainterPath()
         if self._orientation == QtCore.Qt.Orientation.Horizontal:
             path.moveTo(QtCore.QPointF(self._offset, 0))
@@ -58,10 +60,13 @@ def create_header_image(
     paths: Sequence[str],
     output_path: str,
     shadow_radius: int = 32,
-    shadow_offset: QtCore.QPoint = QtCore.QPoint(0, 4),
+    shadow_offset: QtCore.QPoint | None = None,
 ) -> None:
     if not paths:
         raise ValueError('paths cannot be empty')
+
+    if shadow_offset is None:
+        shadow_offset = QtCore.QPoint(0, 4)
 
     QtWidgets.QApplication()
 
