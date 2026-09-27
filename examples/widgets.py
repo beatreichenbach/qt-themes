@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 import os
 
-from PySide6 import QtGui, QtWidgets, QtCore
+from PySide6 import QtCore, QtGui, QtWidgets
+
 import qt_themes
-from tests import application
+from examples import application
 
 
 class WidgetControls(QtWidgets.QWidget):
@@ -328,9 +331,7 @@ class WidgetGallery(QtWidgets.QWidget):
 
     @staticmethod
     def _set_theme(theme: str) -> None:
-        if theme == 'default':
-            theme = None
-        qt_themes.set_theme(theme, style=None)
+        qt_themes.set_theme(None if theme == 'default' else theme, style=None)
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -362,11 +363,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setStatusBar(status_bar)
 
 
-def test_widgets() -> None:
+def main() -> None:
     with application():
         window = MainWindow()
         window.show()
 
 
 if __name__ == '__main__':
-    test_widgets()
+    main()

@@ -1,7 +1,9 @@
-from PySide6 import QtGui, QtWidgets, QtCore
+from __future__ import annotations
+
+from PySide6 import QtCore, QtGui, QtWidgets
 
 import qt_themes
-from tests import application
+from examples import application
 
 ColorGroup = QtGui.QPalette.ColorGroup
 ColorRole = QtGui.QPalette.ColorRole
@@ -37,6 +39,7 @@ class ColorRoleWidget(QtWidgets.QWidget):
     def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
         super().__init__(parent)
 
+        self.color_widget: QtWidgets.QWidget | None = None
         self._init_ui()
         self._update_colors()
 
@@ -44,12 +47,12 @@ class ColorRoleWidget(QtWidgets.QWidget):
         self.setWindowTitle('Color Roles')
         self.setWindowFlags(QtCore.Qt.WindowType.Window)
         self.setMinimumWidth(800)
-        layout = QtWidgets.QVBoxLayout()
-        self.setLayout(layout)
+        self._layout = QtWidgets.QVBoxLayout()
+        self.setLayout(self._layout)
 
         # Theme Dropdown
         control_layout = QtWidgets.QHBoxLayout()
-        layout.addLayout(control_layout)
+        self._layout.addLayout(control_layout)
         theme_label = QtWidgets.QLabel('Theme:')
         control_layout.addWidget(theme_label)
         theme_combobox = QtWidgets.QComboBox()
@@ -60,9 +63,6 @@ class ColorRoleWidget(QtWidgets.QWidget):
         control_layout.addWidget(theme_combobox)
         control_layout.addStretch()
 
-        # Color Widget
-        self.color_widget = None
-
     def _update_colors(self) -> None:
         if self.color_widget:
             self.color_widget.deleteLater()
@@ -70,7 +70,7 @@ class ColorRoleWidget(QtWidgets.QWidget):
         self.color_widget = QtWidgets.QWidget()
         layout = QtWidgets.QGridLayout()
         self.color_widget.setLayout(layout)
-        self.layout().addWidget(self.color_widget)
+        self._layout.addWidget(self.color_widget)
 
         # Color Roles
         app = QtWidgets.QApplication.instance()
@@ -103,14 +103,19 @@ class ColorRoleWidget(QtWidgets.QWidget):
                 frame.setPalette(palette)
                 frame.setAutoFillBackground(True)
 
-                frame.setLayout(QtWidgets.QHBoxLayout())
+                frame_layout = QtWidgets.QHBoxLayout()
+                frame.setLayout(frame_layout)
                 layout.addWidget(frame, i + 1, j + 1)
 
                 # label
-                rgb = background_color.getRgbF()[:3]
+                rgb = (
+                    background_color.redF(),
+                    background_color.greenF(),
+                    background_color.blueF(),
+                )
                 rgb_text = ', '.join(f'{v:.2f}' for v in rgb)
                 label = QtWidgets.QLabel(f'({rgb_text})')
-                frame.layout().addWidget(label)
+                frame_layout.addWidget(label)
 
             if all(color == colors[0] for color in colors):
                 font = role_label.font()
@@ -118,17 +123,15 @@ class ColorRoleWidget(QtWidgets.QWidget):
                 role_label.setFont(font)
 
     def _set_theme(self, theme: str) -> None:
-        if theme == 'default':
-            theme = None
-        qt_themes.set_theme(theme)
+        qt_themes.set_theme(None if theme == 'default' else theme)
         self._update_colors()
 
 
-def test_color_roles() -> None:
+def main() -> None:
     with application():
         widget = ColorRoleWidget()
         widget.show()
 
 
 if __name__ == '__main__':
-    test_color_roles()
+    main()
