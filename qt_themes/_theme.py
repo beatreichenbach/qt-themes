@@ -192,6 +192,8 @@ def set_theme(theme: Theme | str | None, style: str | None = 'fusion') -> None:
     # Reset theme
     if not theme:
         QtWidgets.QApplication.setPalette(QtGui.QPalette())
+        if application := QtWidgets.QApplication.instance():
+            application.setProperty(PROPERTY_NAME, None)
         return
 
     # Set theme
@@ -222,6 +224,7 @@ def set_widget_theme(
     # Reset theme
     if not theme:
         widget.setPalette(QtGui.QPalette())
+        widget.setProperty(PROPERTY_NAME, None)
         return
 
     # Set theme
