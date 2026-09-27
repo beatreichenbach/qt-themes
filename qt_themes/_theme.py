@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import dataclasses
-import importlib.resources
 import json
 import logging
 import os
+import pathlib
 from json import JSONDecodeError
 
 try:
@@ -14,8 +14,6 @@ except ImportError:
         from PySide6 import QtGui, QtWidgets
     except ImportError:
         from PySide2 import QtGui, QtWidgets  # ty: ignore[unresolved-import]
-
-import qt_themes
 
 ColorGroup = QtGui.QPalette.ColorGroup
 ColorRole = QtGui.QPalette.ColorRole
@@ -73,8 +71,8 @@ def get_theme(name: str | None = None) -> Theme | None:
     file_name = f'{name}.json'
     themes_paths = _get_paths()
     for themes_path in themes_paths:
-        path = os.path.join(themes_path, file_name)
-        if os.path.exists(path):
+        path = themes_path / file_name
+        if path.exists():
             break
     else:
         logger.warning(f'Cannot find theme {file_name!r}.')
@@ -83,7 +81,7 @@ def get_theme(name: str | None = None) -> Theme | None:
     try:
         return _load(path)
     except (JSONDecodeError, TypeError):
-        logger.warning(f'Invalid theme {path!r}.')
+        logger.warning(f'Invalid theme {str(path)!r}.')
         return None
 
 
@@ -93,17 +91,15 @@ def get_themes() -> dict[str, Theme]:
     themes_paths = _get_paths()
     themes = {}
     for themes_path in themes_paths:
-        if not os.path.exists(themes_path):
+        if not themes_path.is_dir():
             continue
-        for file_name in os.listdir(themes_path):
-            name, ext = os.path.splitext(file_name)
-            if ext != '.json':
+        for path in themes_path.iterdir():
+            if not path.is_file() or path.suffix != '.json':
                 continue
-            path = os.path.join(themes_path, file_name)
             try:
-                themes[name] = _load(path)
+                themes[path.stem] = _load(path)
             except (JSONDecodeError, TypeError):
-                logger.warning(f'Invalid theme {path!r}.')
+                logger.warning(f'Invalid theme {str(path)!r}.')
                 continue
 
     return themes
@@ -239,7 +235,7 @@ def set_widget_theme(
     widget.setProperty(PROPERTY_NAME, theme)
 
 
-def _load(path: str) -> Theme:
+def _load(path: os.PathLike[str]) -> Theme:
     """
     Return the theme from `path`.
 
@@ -248,17 +244,17 @@ def _load(path: str) -> Theme:
     :raises JSONDecodeError: if theme is invalid json.
     """
 
-    with open(str(path)) as f:
+    with pathlib.Path(path).open() as f:
         data = json.load(f)
     colors = {key: QtGui.QColor(value) for key, value in data.items()}
     return Theme(**colors)
 
 
-def _get_paths() -> tuple[str, ...]:
+def _get_paths() -> tuple[pathlib.Path, ...]:
     """Return all paths to search for themes."""
 
-    paths = [str(importlib.resources.files(qt_themes).joinpath('themes'))]
+    paths = [pathlib.Path(__file__).parent / 'themes']
     if env_path := os.getenv(THEMES):
-        paths.extend(env_path.split(os.pathsep))
+        paths.extend(pathlib.Path(path) for path in env_path.split(os.pathsep))
     logger.debug(f'Color themes paths: {paths}')
     return tuple(paths)

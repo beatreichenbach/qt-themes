@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-import os.path
+import os
 from collections.abc import Sequence
+from pathlib import Path
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
@@ -57,8 +58,8 @@ class MaskedPixmapItem(QtWidgets.QGraphicsPixmapItem):
 
 
 def create_header_image(
-    paths: Sequence[str],
-    output_path: str,
+    paths: Sequence[os.PathLike[str]],
+    output_path: os.PathLike[str],
     shadow_radius: int = 32,
     shadow_offset: QtCore.QPoint | None = None,
 ) -> None:
@@ -114,11 +115,11 @@ def create_header_image(
     painter = QtGui.QPainter(image)
     scene.render(painter, target=QtCore.QRectF(image.rect()), source=scene_rect)
     painter.end()
-    image.save(output_path)
+    image.save(str(output_path))
 
 
 def create_theme_header_image() -> None:
-    assets_dir = os.path.realpath('./assets')
+    assets_dir = Path('./assets').resolve()
     themes = (
         'catppuccin_latte',
         'one_dark_two',
@@ -127,10 +128,8 @@ def create_theme_header_image() -> None:
         'atom_one',
         'nord',
     )
-    paths = []
-    for theme in themes:
-        paths.append(os.path.join(assets_dir, f'{theme}.png'))
-    create_header_image(paths, os.path.join(assets_dir, 'header.png'))
+    paths = [assets_dir / f'{theme}.png' for theme in themes]
+    create_header_image(paths, assets_dir / 'header.png')
 
 
 if __name__ == '__main__':

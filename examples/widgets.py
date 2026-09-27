@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import os
+from pathlib import Path
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
@@ -301,9 +301,9 @@ class WidgetGallery(QtWidgets.QWidget):
 
     def _screenshot(self) -> None:
         theme = self.controls.theme_combo.currentText()
-        path = os.path.join('..', '.github', 'assets', f'{theme}.png')
+        path = Path('..', '.github', 'assets', f'{theme}.png')
         pixmap = self.grab()
-        pixmap.save(path)
+        pixmap.save(str(path))
 
     def _screenshot_all(self) -> None:
         combo = self.controls.theme_combo
@@ -314,9 +314,9 @@ class WidgetGallery(QtWidgets.QWidget):
             self._set_theme(theme)
             QtWidgets.QApplication.processEvents()
 
-            path = os.path.join('..', '.github', 'assets', f'{theme}.png')
+            path = Path('..', '.github', 'assets', f'{theme}.png')
             pixmap = self.grab()
-            pixmap.save(path)
+            pixmap.save(str(path))
         combo.blockSignals(False)
 
     def _set_disabled(self, disabled: bool) -> None:
