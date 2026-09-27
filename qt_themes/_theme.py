@@ -28,29 +28,29 @@ logger = logging.getLogger(__package__)
 
 @dataclasses.dataclass
 class Theme:
-    primary: QtGui.QColor | None = None
-    secondary: QtGui.QColor | None = None
+    primary: QtGui.QColor
+    secondary: QtGui.QColor
 
-    magenta: QtGui.QColor | None = None
-    red: QtGui.QColor | None = None
-    orange: QtGui.QColor | None = None
-    yellow: QtGui.QColor | None = None
-    green: QtGui.QColor | None = None
-    cyan: QtGui.QColor | None = None
-    blue: QtGui.QColor | None = None
+    magenta: QtGui.QColor
+    red: QtGui.QColor
+    orange: QtGui.QColor
+    yellow: QtGui.QColor
+    green: QtGui.QColor
+    cyan: QtGui.QColor
+    blue: QtGui.QColor
 
-    text: QtGui.QColor | None = None
-    subtext1: QtGui.QColor | None = None
-    subtext0: QtGui.QColor | None = None
-    overlay2: QtGui.QColor | None = None
-    overlay1: QtGui.QColor | None = None
-    overlay0: QtGui.QColor | None = None
-    surface2: QtGui.QColor | None = None
-    surface1: QtGui.QColor | None = None
-    surface0: QtGui.QColor | None = None
-    base: QtGui.QColor | None = None
-    mantle: QtGui.QColor | None = None
-    crust: QtGui.QColor | None = None
+    text: QtGui.QColor
+    subtext1: QtGui.QColor
+    subtext0: QtGui.QColor
+    overlay2: QtGui.QColor
+    overlay1: QtGui.QColor
+    overlay0: QtGui.QColor
+    surface2: QtGui.QColor
+    surface1: QtGui.QColor
+    surface0: QtGui.QColor
+    base: QtGui.QColor
+    mantle: QtGui.QColor
+    crust: QtGui.QColor
 
     def is_dark_theme(self) -> bool:
         return self.text.value() > self.base.value()

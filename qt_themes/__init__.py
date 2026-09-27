@@ -7,5 +7,13 @@ from ._theme import (
     update_palette,
 )
 
+__all__ = [
+    'Theme',
+    'get_theme',
+    'get_themes',
+    'set_theme',
+    'set_widget_theme',
+    'update_palette',
+]
 
 __version__ = '0.4.0'
