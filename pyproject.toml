@@ -34,7 +34,7 @@ include-package-data = false
 include = ["qt_themes"]
 
 [tool.setuptools.package-data]
-"qt_themes" = ["themes/*.json"]
+"qt_themes" = ["py.typed", "themes/*.json"]
 
 [tool.semantic_release]
 allow_zero_version = true
